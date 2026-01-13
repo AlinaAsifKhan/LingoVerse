@@ -4,41 +4,47 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
 import 'screens/get_started_screen.dart';
+import 'theme/app_theme.dart';
+
+
 
 
 
     // ---------------- MAIN ----------------
-    void main() async {
-      WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-      runApp(
-        DevicePreview(
-          enabled: true,
-          builder: (context) => const LingoVerseApp(),
-        ),
-      );
-    }
+  void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(
+    DevicePreview(
+      enabled: true, // disable in production
+      builder: (context) => const LingoVerseApp(),
+    ),
+  );
+}
+
 
     // ---------------- APP ----------------
-    class LingoVerseApp extends StatelessWidget {
-      const LingoVerseApp({super.key});
+  class LingoVerseApp extends StatelessWidget {
+  const LingoVerseApp({super.key});
 
-      @override
-      Widget build(BuildContext context) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          useInheritedMediaQuery: true,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-          title: 'LingoVerse',
-          theme: ThemeData(
-            primaryColor: const Color(0xFFAACEE1),
-            scaffoldBackgroundColor: const Color(0xFFAACEE1),
-            fontFamily: 'Poppins',
-          ),
-          home: const GetStartedScreen(),
-        );
-      }
-    }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'LingoVerse',
+
+      // ✅ USE ONLY ONE THEME
+      theme: AppTheme.lightTheme,
+
+      // Device preview setup
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+
+      home: const GetStartedScreen(),
+    );
+  }
+}
